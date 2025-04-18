@@ -35,6 +35,47 @@ header {
     margin-left: 1em;
 }
 
+/* Authentication Navigation */
+.auth-nav {
+    margin-left: auto;
+    margin-right: 1em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.auth-link {
+    color: #000;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border: 1px solid #000;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.auth-link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Logout form and button styling */
+.logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.logout-button {
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.welcome-text {
+    margin-right: 1em;
+}
+
+/* Content */
 .content {
     padding: 2em;
 }
@@ -51,6 +92,7 @@ header {
     border: #000 solid 2px;
     padding: 1.25rem 1.5rem;
     transition: box-shadow 0.2s;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
 }
@@ -98,6 +140,87 @@ header {
 .news-detail-image {
     height: 20em;
     width: auto;
+}
+
+/* Authentication Forms */
+.auth-form-container {
+    max-width: 500px;
+    margin: 2em auto;
+    padding: 2em;
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+
+.auth-form-container h2 {
+    margin-top: 0;
+    font-family: "Anton", sans-serif;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: calc(100% - 1.5em);
+    padding: 0.75em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+.auth-button {
+    display: block;
+    width: 100%;
+    padding: 0.75em;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1em;
+    transition: background-color 0.2s;
+}
+
+.auth-button:hover {
+    background-color: #333;
+}
+
+.auth-links {
+    margin-top: 1.5em;
+    text-align: center;
+}
+
+.auth-links a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #dc3545;
+    margin: 0.5em 0;
+}
+
+.help-text {
+    color: #6c757d;
+    display: block;
+    margin-top: 0.25em;
+    font-size: 0.875em;
 }
 
 footer {

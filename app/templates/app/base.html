@@ -19,6 +19,24 @@
             />
             <a href="/" class="header-title">FANN</a>
             <p class="header-subtitle">Fake Alien News Network</p>
+            <div class="auth-nav">
+                {% if user.is_authenticated %}
+                <span class="welcome-text">Welcome, {{ user.username }}</span>
+                <form
+                    method="post"
+                    action="{% url 'logout' %}"
+                    class="logout-form"
+                >
+                    {% csrf_token %}
+                    <button type="submit" class="auth-link logout-button">
+                        Logout
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="auth-link">Login</a>
+                <a href="{% url 'register' %}" class="auth-link">Register</a>
+                {% endif %}
+            </div>
         </header>
         <div class="content">{% block content %} {% endblock %}</div>
         <footer>Fake news done right.</footer>
