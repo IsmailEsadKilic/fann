@@ -1,0 +1,18 @@
+{% extends "app/base.html" %} {% block content %}
+<div>
+    {% if news.image %}
+    <div class="news-detail-image-container">
+        <img
+            src="{{ news.image.url }}"
+            alt="FANN Logo"
+            class="news-detail-image"
+            width="50"
+            height="50"
+        />
+    </div>
+    {% else %} {% endif %}
+    <h1 class="news-detail-title">{{ news.title }}</h1>
+    <p class="news-detail-content">{{ news.content|safe }}</p>
+    <p><b>Published on:</b> {{ news.published_date }}</p>
+</div>
+{% endblock %}

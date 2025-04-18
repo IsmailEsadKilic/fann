@@ -1,0 +1,17 @@
+{% extends "app/base.html" %} {% block content %}
+<div>
+    {% if news %}
+    <h1>News</h1>
+    <div class="news-list">
+        {% for article in news %}
+        <div class="news-item">
+            <a href="/news/{{ article.id }}">{{ article.title }}</a>
+            <p>{{ article.content | truncatewords:100 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No news available.</p>
+    {% endif %}
+</div>
+{% endblock %}
