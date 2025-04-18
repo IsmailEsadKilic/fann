@@ -12,7 +12,17 @@
     </div>
     {% else %} {% endif %}
     <h1 class="news-detail-title">{{ news.title }}</h1>
+    <div class="news-detail-meta">
+        <p>
+            <b>Published by:</b> 
+            {% if news.user %}
+                {{ news.user.username }}
+            {% else %}
+                Anonymous
+            {% endif %}
+        </p>
+        <p><b>Published on:</b> {{ news.published_date }}</p>
+    </div>
     <p class="news-detail-content">{{ news.content|safe }}</p>
-    <p><b>Published on:</b> {{ news.published_date }}</p>
 </div>
 {% endblock %}
