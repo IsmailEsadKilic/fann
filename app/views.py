@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 
 from app import models
-from app.forms import CustomUserCreationForm
+from app.forms import CustomUserCreationForm, NewsPostForm
 
 
 def index(request):
@@ -28,3 +29,17 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, "registration/register.html", {"form": form})
+
+
+@login_required
+def publish_news_post(request):
+    if request.method == "POST":
+        form = NewsPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            news_post = form.save(commit=False)
+            news_post.user = request.user
+            news_post.save()
+            return redirect("news_detail", news_id=news_post.id)
+    else:
+        form = NewsPostForm()
+    return render(request, "app/publish_news_post.html", {"form": form})

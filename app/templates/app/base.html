@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'app/fonts.css' %}" />
         <link rel="stylesheet" href="{% static 'app/style.css' %}" />
         <link rel="icon" href="{% static 'app/img/logo.png' %}" />
+        {{ form.media }}
     </head>
     <body>
         <header>
@@ -33,6 +34,7 @@
                         Logout
                     </button>
                 </form>
+                <a href="{% url 'publish_news_post' %}" class="auth-link">Publish News</a>
                 {% else %}
                 <a href="{% url 'login' %}" class="auth-link">Login</a>
                 <a href="{% url 'register' %}" class="auth-link">Register</a>

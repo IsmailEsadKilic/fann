@@ -228,3 +228,59 @@ footer {
     margin-bottom: 1em;
     text-align: center;
 }
+
+/* News Post Form Styling */
+.news-post-form {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 2em;
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+
+.news-post-form h1 {
+    margin-top: 0;
+    font-family: "Anton", sans-serif;
+    text-align: center;
+}
+
+.news-post-form .form-group {
+    margin-bottom: 1.5em;
+}
+
+.news-post-form input[type="text"],
+.news-post-form select,
+.news-post-form textarea {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/* CKEditor specific styles */
+.django-ckeditor-widget {
+    width: 100%;
+}
+
+.cke_chrome {
+    width: 100% !important;
+    overflow: hidden;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 0.75em;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1em;
+}
