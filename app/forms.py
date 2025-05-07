@@ -16,4 +16,4 @@ class NewsPostForm(forms.ModelForm):
     
     class Meta:
         model = NewsPost
-        fields = ['title', 'category', 'image', 'content']
+        fields = ['title', 'image', 'content']

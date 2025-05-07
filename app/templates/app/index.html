@@ -6,7 +6,7 @@
         {% for article in news %}
         <div class="news-item">
             <a href="/news/{{ article.id }}">{{ article.title }}</a>
-            <p>{{ article.content | truncatewords:100 | safe }}</p>
+            <p>{{ article.summary | truncatewords:100 }}</p>
         </div>
         {% endfor %}
     </div>
