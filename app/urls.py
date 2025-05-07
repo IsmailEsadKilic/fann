@@ -12,7 +12,6 @@ urlpatterns = [
         "accounts/logout/", auth_views.LogoutView.as_view(next_page="/"), name="logout"
     ),
     path("accounts/register/", views.register, name="register"),
-    # Redirect any profile-related URLs to the homepage
     path(
         "accounts/profile/",
         RedirectView.as_view(url="/", permanent=False),

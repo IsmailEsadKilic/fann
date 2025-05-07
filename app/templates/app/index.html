@@ -5,8 +5,18 @@
     <div class="news-list">
         {% for article in news %}
         <div class="news-item">
+            {% if article.image %}
+            <div class="news-item-image">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" />
+            </div>
+            {% endif %}
             <a href="/news/{{ article.id }}">{{ article.title }}</a>
-            <p>{{ article.content | truncatewords:100 | safe }}</p>
+            <p>{{ article.summary | truncatewords:100 }}</p>
+            <div class="news-item-tags">
+                {% for tag in article.tags.all %}
+                    <span class="news-tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
         </div>
         {% endfor %}
     </div>
