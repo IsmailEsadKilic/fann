@@ -29,4 +29,5 @@ urlpatterns = [
 
     path("publish/", views.publish_news_post, name="publish_news_post"),
     path("edit_news_post/<int:news_id>/", views.edit_news_post, name="edit_news_post"),
+    path("delete_post/<int:news_id>/", views.delete_news_post, name="delete_news_post"),
 ]

@@ -58,3 +58,12 @@ def edit_news_post(request, news_id):
         form = NewsPostForm(instance=post)
 
     return render(request, 'app/publish_news_post.html', {'form': form, 'post': post, 'edit': True})
+
+@login_required
+def delete_news_post(request, news_id):
+    post = get_object_or_404(models.NewsPost, id=news_id)
+    if request.user == post.user:
+        post.delete()
+        return redirect("index")
+    else:
+        return redirect("news_detail", news_id=news_id)

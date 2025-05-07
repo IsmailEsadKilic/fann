@@ -31,5 +31,11 @@
             <button type="submit" class="submit-button">{% if edit %}Edit{% else%}Publish{% endif %}</button>
         </div>
     </form>
+    {% if edit %}
+    <form method="POST" action="{% url 'delete_news_post' post.id %}" class="remove-post-form">
+        {% csrf_token %}
+        <button type="submit" class="remove-button">Remove Post</button>
+    </form>
+    {% endif %}
 </div>
 {% endblock %}
