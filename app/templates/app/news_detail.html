@@ -22,10 +22,15 @@
             {% endif %}
         </p>
         <p><b>Published on:</b> {{ news.published_date }}</p>
+        <div class="news-item-tags">
+            {% for tag in news.tags.all %}
+                <span class="news-tag">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
     </div>
     <p class="news-detail-content">{{ news.content|safe }}</p>
     {% if user.is_authenticated %}
     <a href="{% url 'edit_news_post' news.id %}" class="auth-link">Edit Post</a>
-{% endif %}
+    {% endif %}
 </div>
 {% endblock %}

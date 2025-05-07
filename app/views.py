@@ -39,21 +39,42 @@ def publish_news_post(request):
             news_post = form.save(commit=False)
             news_post.user = request.user
             news_post.save()
+            
+            # Handle existing tags
+            form.save_m2m()  # Save many-to-many relationships
+            
+            # Handle new tags
+            new_tags = form.cleaned_data.get('new_tags', '').strip()
+            if new_tags:
+                tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
+                for tag_name in tag_names:
+                    tag, created = models.Tag.objects.get_or_create(name=tag_name)
+                    news_post.tags.add(tag)
+            
             return redirect("news_detail", news_id=news_post.id)
     else:
         form = NewsPostForm()
     return render(request, "app/publish_news_post.html", {"form": form})
 
-@login_required
 
+@login_required
 def edit_news_post(request, news_id):
     post = get_object_or_404(models.NewsPost, id=news_id)
 
     if request.method == "POST":
         form = NewsPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            form.save()
-            return redirect('news_detail', news_id=post.id)  
+            news_post = form.save()
+            
+            # Handle new tags
+            new_tags = form.cleaned_data.get('new_tags', '').strip()
+            if new_tags:
+                tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
+                for tag_name in tag_names:
+                    tag, created = models.Tag.objects.get_or_create(name=tag_name)
+                    news_post.tags.add(tag)
+                    
+            return redirect('news_detail', news_id=post.id)
     else:
         form = NewsPostForm(instance=post)
 
