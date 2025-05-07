@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 from app import models
@@ -43,3 +43,18 @@ def publish_news_post(request):
     else:
         form = NewsPostForm()
     return render(request, "app/publish_news_post.html", {"form": form})
+
+@login_required
+
+def edit_news_post(request, news_id):
+    post = get_object_or_404(models.NewsPost, id=news_id)
+
+    if request.method == "POST":
+        form = NewsPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('news_detail', news_id=post.id)  
+    else:
+        form = NewsPostForm(instance=post)
+
+    return render(request, 'app/publish_news_post.html', {'form': form, 'post': post, 'edit': True})
