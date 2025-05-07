@@ -3,8 +3,7 @@
 
 {% block content %}
 <div class="news-post-form">
-    <h1>Publish New News Post</h1>
-    
+    <h1>{% if edit %}Edit{% else%}Publish{% endif %} New News Post</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
@@ -29,7 +28,7 @@
         </div>
         
         <div class="form-actions">
-            <button type="submit" class="submit-button">Publish</button>
+            <button type="submit" class="submit-button">{% if edit %}Edit{% else%}Publish{% endif %}</button>
         </div>
     </form>
 </div>
