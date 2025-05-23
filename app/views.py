@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from app import models
-from app.forms import CustomUserCreationForm, NewsPostForm
+from app.forms import CommentForm, CustomUserCreationForm, NewsPostForm
 
 
 def index(request):
@@ -12,8 +12,26 @@ def index(request):
 
 
 def news_detail(request, news_id):
-    news = models.NewsPost.objects.get(id=news_id)
-    return render(request, "app/news_detail.html", {"news": news})
+    news = get_object_or_404(models.NewsPost, id=news_id)
+    comments = news.comments.all()
+
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.news_post = news
+            if request.user.is_authenticated:
+                comment.user = request.user
+            comment.save()
+            return redirect("news_detail", news_id=news_id)
+    else:
+        comment_form = CommentForm()
+
+    return render(
+        request,
+        "app/news_detail.html",
+        {"news": news, "comments": comments, "comment_form": comment_form},
+    )
 
 
 def register(request):
@@ -39,18 +57,18 @@ def publish_news_post(request):
             news_post = form.save(commit=False)
             news_post.user = request.user
             news_post.save()
-            
+
             # Handle existing tags
             form.save_m2m()  # Save many-to-many relationships
-            
+
             # Handle new tags
-            new_tags = form.cleaned_data.get('new_tags', '').strip()
+            new_tags = form.cleaned_data.get("new_tags", "").strip()
             if new_tags:
-                tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
+                tag_names = [t.strip() for t in new_tags.split(",") if t.strip()]
                 for tag_name in tag_names:
                     tag, created = models.Tag.objects.get_or_create(name=tag_name)
                     news_post.tags.add(tag)
-            
+
             return redirect("news_detail", news_id=news_post.id)
     else:
         form = NewsPostForm()
@@ -65,20 +83,25 @@ def edit_news_post(request, news_id):
         form = NewsPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             news_post = form.save()
-            
+
             # Handle new tags
-            new_tags = form.cleaned_data.get('new_tags', '').strip()
+            new_tags = form.cleaned_data.get("new_tags", "").strip()
             if new_tags:
-                tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
+                tag_names = [t.strip() for t in new_tags.split(",") if t.strip()]
                 for tag_name in tag_names:
                     tag, created = models.Tag.objects.get_or_create(name=tag_name)
                     news_post.tags.add(tag)
-                    
-            return redirect('news_detail', news_id=post.id)
+
+            return redirect("news_detail", news_id=post.id)
     else:
         form = NewsPostForm(instance=post)
 
-    return render(request, 'app/publish_news_post.html', {'form': form, 'post': post, 'edit': True})
+    return render(
+        request,
+        "app/publish_news_post.html",
+        {"form": form, "post": post, "edit": True},
+    )
+
 
 @login_required
 def delete_news_post(request, news_id):
