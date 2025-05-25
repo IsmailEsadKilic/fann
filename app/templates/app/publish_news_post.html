@@ -42,10 +42,16 @@
         </div>
     </form>
     {% if edit %}
-    <form method="POST" action="{% url 'delete_news_post' post.id %}" class="remove-post-form">
-        {% csrf_token %}
-        <button type="submit" class="remove-button">Remove Post</button>
+    {% if user.is_authenticated and user == news.user%}
+    <form
+      method="POST"
+      action="{% url 'delete_news_post' news.id %}"
+      class="remove-post-form"
+    >
+      {% csrf_token %}
+      <button type="submit" style = 'red' class="auth-link logout-button">Remove Post</button>
     </form>
+    {% endif %}
     {% endif %}
 </div>
 {% endblock %}
